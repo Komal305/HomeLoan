@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Gemini Bank</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+        .signup-container {
+            width: 700px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+        }
+        .signup-image {
+            flex: 1;
+            background: url('/images/gemini.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        .signup-form {
+            flex: 1;
+            padding: 40px;
+        }
+        .signup-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-text {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-image"></div>
+        <div class="signup-form" >
+            <h2>Create Account</h2>
+            <form action="/signup" method="post" id="signupForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <input type="text" class="form-control" id="role" name="role" >
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <div id="message" class="form-text"></div>
+                <div class="form-text">
+                    <a href="/login">Already have an account? Log In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Retrieve values from the form fields
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // Validate if passwords match
+    if (password !== confirmPassword) {
+        document.getElementById('message').innerText = 'Passwords do not match.';
+        return; // Stop form submission
+    }
+    
+    // Create formData object
+    const formData = {
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value,
+        password: password
+    };
+
+    // Make POST request to the server
+    fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+     .then(response => {
+       if (response.ok) {
+                window.location.href = '/register-success';
+            } else {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Error registering user.');
+                });
+            }
+        })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'Error registering user.';
+    });
+});
+
+    </script>
+    
+</body>
+</html>

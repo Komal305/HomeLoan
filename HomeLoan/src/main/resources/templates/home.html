@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Loan Application - GEMINI Bank</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">GEMINI Bank</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Apply Online</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user}">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Privacy Policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Disclaimer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Home Loan Application</h1>
+            <p class="lead">Avail best interest rates on your home loan!</p>
+        </div>
+
+        <div class="text-center">
+            <h2>What Loan Are You Looking For?</h2>
+            <div class="btn-group btn-group-lg mt-3" role="group" aria-label="Loan types">
+                <a th:href="@{/allLoans}" class="btn btn-primary">Housing Loan</a>
+                <a th:href="@{/allLoans}" class="btn btn-secondary">Land Loan</a>
+                <a th:href="@{/allLoans}" class="btn btn-success">Loan Against Property</a>
+                <a th:href="@{/allLoans}" class="btn btn-danger">Commercial Premises Loan</a>
+            </div>
+        </div>
+    </div>
+<footer class="bg-light text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">GEMINI Bank Ltd.</h5>
+                <p>Copyright © 2024 GEMINI Bank Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</html>

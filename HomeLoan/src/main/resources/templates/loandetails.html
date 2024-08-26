@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Loan Details</h1>
+    <div th:if="${loan != null}">
+        <p><strong>Loan Type:</strong> <span th:text="${loan.loanType}"></span></p>
+        <p><strong>User name:</strong> <span th:text="${loan.nomineeDetails}"></span></p>
+        <p><strong>Total Loan Amount:</strong> <span th:text="${loan.totalLoanAmount}"></span></p>
+        <p><strong>Loan Tenure:</strong> <span th:text="${loan.loanTenure}"></span> months</p>
+        <p><strong>Rate of Interest:</strong> <span th:text="${loan.rateOfInterest}"></span>%</p>
+        <p><strong>Principal Outstanding:</strong> <span th:text="${loan.principalOutstanding}"></span></p>
+        <p><strong>Outstanding EMI Count:</strong> <span th:text="${loan.outstandingEmiCount}"></span></p>
+    </div>
+    <div th:if="${loan == null}">
+        <p>Loan not found.</p>
+    </div>
+</div>
+</body>
+</html>
