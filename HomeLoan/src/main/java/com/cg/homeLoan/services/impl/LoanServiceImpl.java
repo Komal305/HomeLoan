@@ -1,7 +1,6 @@
 package com.cg.homeLoan.services.impl;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cg.homeLoan.Dto.LoanDTO;
 import com.cg.homeLoan.Exception.ResourceNotFoundException;
-import com.cg.homeLoan.entity.Loan;
-import com.cg.homeLoan.entity.Users;
+import com.cg.homeLoan.entity.LoanOffer;
+import com.cg.homeLoan.entity.User;
 import com.cg.homeLoan.repo.LoanRepository;
 import com.cg.homeLoan.repo.UserRepo;
 import com.cg.homeLoan.services.LoanService;
@@ -27,9 +26,9 @@ public class LoanServiceImpl implements LoanService {
     private UserRepo userRepository;
 
     @Override
-    public Loan applyForLoan(LoanDTO loanDTO) throws ResourceNotFoundException {
+    public LoanOffer applyForLoan(LoanDTO loanDTO) throws ResourceNotFoundException {
         // Convert LoanDTO to Loan entity
-        Loan loan = new Loan();
+        LoanOffer loan = new LoanOffer();
         
         // Set properties from DTO
         loan.setLoanNumber(loanDTO.getLoanNumber());  // Assuming LoanDTO has this field
@@ -43,7 +42,7 @@ public class LoanServiceImpl implements LoanService {
         loan.setCreationDate(LocalDate.now());  // Set creation date to the current date
 
         // Set the User entity
-        Users user = userRepository.findById(loanDTO.getId())
+        User user = userRepository.findById(loanDTO.getId())
                                   .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + loanDTO.getUserId()));
         loan.setUser(user);
 
@@ -53,23 +52,23 @@ public class LoanServiceImpl implements LoanService {
 
 
     @Override
-    public Loan getLoanById(Long loanId) throws ResourceNotFoundException {
+    public LoanOffer getLoanById(Long loanId) throws ResourceNotFoundException {
        
-        Optional<Loan> loan = loanRepository.findById(loanId);
+        Optional<LoanOffer> loan = loanRepository.findById(loanId);
         return loan.orElseThrow(() -> new ResourceNotFoundException("Loan not found with ID: " + loanId));
     }
 
     @Override
-    public List<Loan> getLoansByUserId(Long userId) {
-        return loanRepository.findByUserId(userId);
+    public Optional<LoanOffer> getLoanByUserId(Long userId) {
+        return loanRepository.findById(userId);
     }
 
     @Override
     public void updateLoan(LoanDTO loanDTO) throws ResourceNotFoundException {
         
-        Optional<Loan> existingLoanOpt = loanRepository.findById(loanDTO.getId());
+        Optional<LoanOffer> existingLoanOpt = loanRepository.findById(loanDTO.getId());
         if (existingLoanOpt.isPresent()) {
-            Loan existingLoan = existingLoanOpt.get();
+            LoanOffer existingLoan = existingLoanOpt.get();
             
      
             existingLoan.setLoanNumber(loanDTO.getLoanNumber());
@@ -83,7 +82,7 @@ public class LoanServiceImpl implements LoanService {
             existingLoan.setCreationDate(loanDTO.getCreationDate());
 
             
-            Users user = userRepository.findById(loanDTO.getUserId())
+            User user = userRepository.findById(loanDTO.getUserId())
                                       .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + loanDTO.getUserId()));
             existingLoan.setUser(user);
 
@@ -98,7 +97,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public void deleteLoan(Long loanId) throws ResourceNotFoundException  {
         // Find loan by ID
-        Optional<Loan> loan = loanRepository.findById(loanId);
+        Optional<LoanOffer> loan = loanRepository.findById(loanId);
         if (loan.isPresent()) {
             // Delete the loan from the repository
             loanRepository.deleteById(loanId);

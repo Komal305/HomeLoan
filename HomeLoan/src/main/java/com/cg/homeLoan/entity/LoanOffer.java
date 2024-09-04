@@ -1,10 +1,16 @@
 package com.cg.homeLoan.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,66 +23,117 @@ public class LoanOffer {
 
     @Column(nullable = false)
     private String loanType;
-
     @Column(nullable = false)
-    private Double interestRate;
-
+    private String loanNumber;
     @Column(nullable = false)
-    private String description;
-
+    private BigDecimal loanAmount;
     @Column(nullable = false)
-    private Integer maxTenure;
-
+    private String nomineeDetails;
     @Column(nullable = false)
-    private Double maxLoanAmount;
+    private Integer loanTenure;
+    @Column(nullable = false)
+    private BigDecimal rateOfInterest;
+    @Column(nullable = false)
+    private BigDecimal principalOutstandingAmount;
+    @Column(nullable = false)
+    private Integer outstandingEMICount;
+    @Column(nullable = false)
+    private LocalDate creationDate;
+    
+    
+    // Mapping to User entity with ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-	public Long getId() {
-		return id;
-	}
+    // Getters and Setters
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getLoanType() {
-		return loanType;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLoanType(String loanType) {
-		this.loanType = loanType;
-	}
+    public String getLoanType() {
+        return loanType;
+    }
 
-	public Double getInterestRate() {
-		return interestRate;
-	}
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
+    }
 
-	public void setInterestRate(Double interestRate) {
-		this.interestRate = interestRate;
-	}
+    public String getLoanNumber() {
+        return loanNumber;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setLoanNumber(String loanNumber) {
+        this.loanNumber = loanNumber;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public BigDecimal getLoanAmount() {
+        return loanAmount;
+    }
 
-	public Integer getMaxTenure() {
-		return maxTenure;
-	}
+    public void setLoanAmount(BigDecimal loanAmount) {
+        this.loanAmount = loanAmount;
+    }
 
-	public void setMaxTenure(Integer maxTenure) {
-		this.maxTenure = maxTenure;
-	}
+    public String getNomineeDetails() {
+        return nomineeDetails;
+    }
 
-	public Double getMaxLoanAmount() {
-		return maxLoanAmount;
-	}
+    public void setNomineeDetails(String nomineeDetails) {
+        this.nomineeDetails = nomineeDetails;
+    }
 
-	public void setMaxLoanAmount(Double maxLoanAmount) {
-		this.maxLoanAmount = maxLoanAmount;
-	}
+    public Integer getLoanTenure() {
+        return loanTenure;
+    }
 
+    public void setLoanTenure(Integer loanTenure) {
+        this.loanTenure = loanTenure;
+    }
+
+    public BigDecimal getRateOfInterest() {
+        return rateOfInterest;
+    }
+
+    public void setRateOfInterest(BigDecimal rateOfInterest) {
+        this.rateOfInterest = rateOfInterest;
+    }
+
+    public BigDecimal getPrincipalOutstandingAmount() {
+        return principalOutstandingAmount;
+    }
+
+    public void setPrincipalOutstandingAmount(BigDecimal principalOutstandingAmount) {
+        this.principalOutstandingAmount = principalOutstandingAmount;
+    }
+
+    public Integer getOutstandingEMICount() {
+        return outstandingEMICount;
+    }
+
+    public void setOutstandingEMICount(Integer outstandingEMICount) {
+        this.outstandingEMICount = outstandingEMICount;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
 }

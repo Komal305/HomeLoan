@@ -1,7 +1,6 @@
 package com.cg.homeLoan.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -38,6 +37,9 @@ public class HomeLoan {
 
     @Column(nullable = false)
     private Integer loanTenure;
+    
+    @Column(nullable = false)
+    private String loanAccountNumber;
 
     @Column(nullable = false)
     private Double rateOfInterest;
@@ -55,7 +57,7 @@ public class HomeLoan {
     private List<LoanTracker> loanTrackers;
 
     @Temporal(TemporalType.DATE)
-    private Date loanCreationDate;
+    private LocalDate loanCreationDate;
 
 	public Long getId() {
 		return id;
@@ -137,16 +139,51 @@ public class HomeLoan {
 		this.loanTrackers = loanTrackers;
 	}
 
-	public Date getLoanCreationDate() {
+	public LocalDate getLoanCreationDate() {
 		return loanCreationDate;
 	}
 
-	public void setLoanCreationDate(Date loanCreationDate) {
+	public void setLoanCreationDate(LocalDate loanCreationDate) {
 		this.loanCreationDate = loanCreationDate;
 	}
 
-    // Getters and setters
+	public String getLoanAccountNumber() {
+		return loanAccountNumber;
+	}
 
+	public void setLoanAccountNumber(String loanAccountNumber) {
+		this.loanAccountNumber = loanAccountNumber;
+	}
+
+	public HomeLoan(Long id, User user, String loanType, Double loanAmount, Integer loanTenure,
+			String loanAccountNumber, Double rateOfInterest, Double principalOutstandingAmount,
+			Integer outstandingEMICount, NomineeDetails nomineeDetails, List<LoanTracker> loanTrackers,
+			LocalDate loanCreationDate) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.loanType = loanType;
+		this.loanAmount = loanAmount;
+		this.loanTenure = loanTenure;
+		this.loanAccountNumber = loanAccountNumber;
+		this.rateOfInterest = rateOfInterest;
+		this.principalOutstandingAmount = principalOutstandingAmount;
+		this.outstandingEMICount = outstandingEMICount;
+		this.nomineeDetails = nomineeDetails;
+		this.loanTrackers = loanTrackers;
+		this.loanCreationDate = loanCreationDate;
+	}
+
+	@Override
+	public String toString() {
+		return "HomeLoan [id=" + id + ", user=" + user + ", loanType=" + loanType + ", loanAmount=" + loanAmount
+				+ ", loanTenure=" + loanTenure + ", loanAccountNumber=" + loanAccountNumber + ", rateOfInterest="
+				+ rateOfInterest + ", principalOutstandingAmount=" + principalOutstandingAmount
+				+ ", outstandingEMICount=" + outstandingEMICount + ", nomineeDetails=" + nomineeDetails
+				+ ", loanTrackers=" + loanTrackers + ", loanCreationDate=" + loanCreationDate + "]";
+	}
+
+  
 	    
 		
 	    

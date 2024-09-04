@@ -6,14 +6,16 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -25,7 +27,7 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	 @Column(nullable = false, unique = true)
 	    private String email;
 
@@ -37,8 +39,11 @@ public class User implements UserDetails {
 
 	    @Column(nullable = false)
 	    private String city;
-
-	    @Enumerated(EnumType.STRING)
+	    
+	    
+	    @ManyToOne
+	    @JoinColumn(name = "role_id", nullable = false)
+	    @JsonDeserialize(using = RoleDeserializer.class)
 	    private Role role; // USER or ADMIN
 
 	    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -49,7 +54,7 @@ public class User implements UserDetails {
     	super();
 	}
 
-	public User(Integer id, String email, String name, String password, String city, Role role) {
+	public User(Long id, String email, String name, String password, String city, Role role) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -60,11 +65,17 @@ public class User implements UserDetails {
 	}
 
 
-	public Integer getId() {
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

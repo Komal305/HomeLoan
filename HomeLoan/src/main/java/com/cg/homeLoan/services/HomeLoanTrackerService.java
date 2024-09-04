@@ -9,7 +9,7 @@ public interface HomeLoanTrackerService {
 	//List<HomeLoanDto> getLoansByLoanId(Integer loanId);
 	
 	
-	    List<HomeLoanDto> getLoansByUsersId(Integer userId);
+	    List<HomeLoanDto> getLoanByUserId(Long userId);
 	    HomeLoanDto getLoanDetails(Long loanId);
 	
 

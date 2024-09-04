@@ -1,7 +1,7 @@
 package com.cg.homeLoan.services.impl;
 
 import com.cg.homeLoan.Dto.UserDto;
-import com.cg.homeLoan.entity.Users;
+import com.cg.homeLoan.entity.User;
 import com.cg.homeLoan.repo.UserRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +32,16 @@ public class UserManagementService {
 	public UserDto register(UserDto userDto) {
 		UserDto userD = new UserDto();
 		try {
-			Users users = new Users();
+			User users = new User();
 			users.setEmail(userDto.getEmail());
 			users.setCity(userDto.getCity());
 			users.setRole(userDto.getRole());
 			users.setName(userDto.getName());
 			users.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-			Users result = userRepo.save(users);
+			User result = userRepo.save(users);
 			if (result.getId() > 0) {
-				userD.setUsers(result);
+				userD.setUser(result);
 				userD.setMessage("User saved");
 				userD.setStatusCode(200);
 			}
@@ -61,7 +61,7 @@ public class UserManagementService {
 			authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()) );
 
-			Users user = userRepo.findByEmail(userDto.getEmail()).orElseThrow();
+			User user = userRepo.findByEmail(userDto.getEmail()).orElseThrow();
 			System.out.println("before generate ");
 			var jwt = jwtUtils.generateToken(user);
 			System.out.println("after generate ");
@@ -85,7 +85,7 @@ public class UserManagementService {
 		UserDto response = new UserDto();
 		try {
 			String ourEmail = jwtUtils.extractUsername(refreshTokenReqiest.getToken());
-			Users users = userRepo.findByEmail(ourEmail).orElseThrow();
+			User users = userRepo.findByEmail(ourEmail).orElseThrow();
 			if (jwtUtils.isTokenValid(refreshTokenReqiest.getToken(), users)) {
 				var jwt = jwtUtils.generateToken(users);
 				response.setStatusCode(200);
@@ -107,9 +107,9 @@ public class UserManagementService {
 	public UserDto getAllUser() {
 		UserDto userDto = new UserDto();
 		try {
-			List<Users> result = userRepo.findAll();
+			List<User> result = userRepo.findAll();
 			if (!result.isEmpty()) {
-				userDto.setUserList(result);
+				userDto.setUsersList(result);
 				userDto.setStatusCode(200);
 				userDto.setMessage("Successful");
 			} else {
@@ -127,8 +127,8 @@ public class UserManagementService {
 	public UserDto getUserById(Integer id) {
 		UserDto userDto = new UserDto();
 		try {
-			Users usersById = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-			userDto.setUsers(usersById);
+			User usersById = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+			userDto.setUser(usersById);
 			userDto.setStatusCode(200);
 			userDto.setMessage("User with id" + usersById + "got.");
 		} catch (Exception e) {
@@ -138,10 +138,10 @@ public class UserManagementService {
 		return userDto;
 	}
 
-	public UserDto deleteUser(Integer userId) {
+	public UserDto deleteUser(Long userId) {
 		UserDto userDto = new UserDto();
 		try {
-			Optional<Users> users = userRepo.findById(userId);
+			Optional<User> users = userRepo.findById(userId);
 			if (users.isPresent()) {
 				userRepo.deleteById(userId);
 				userDto.setStatusCode(200);
@@ -159,12 +159,12 @@ public class UserManagementService {
 
 	}
 
-	public UserDto updateUser(Integer userId, Users updateUser) {
+	public UserDto updateUser(Integer userId, User updateUser) {
 		UserDto userDto = new UserDto();
 		try {
-			Optional<Users> user = userRepo.findById(userId);
+			Optional<User> user = userRepo.findById(userId);
 			if (user.isPresent()) {
-				Users existingUser = user.get();
+				User existingUser = user.get();
 				existingUser.setEmail(updateUser.getEmail());
 				existingUser.setName(updateUser.getName());
 				existingUser.setCity(updateUser.getCity());
@@ -172,8 +172,8 @@ public class UserManagementService {
 				if (updateUser.getPassword() != null && !updateUser.getPassword().isEmpty()) {
 					existingUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
 				}
-				Users savedUser = userRepo.save(existingUser);
-				userDto.setUsers(savedUser);
+				User savedUser = userRepo.save(existingUser);
+				userDto.setUser(savedUser);
 				userDto.setStatusCode(200);
 				userDto.setMessage("Updated Successful");
 			} else {
@@ -191,9 +191,9 @@ public class UserManagementService {
 		UserDto userDto = new UserDto();
 
 		try {
-			Optional<Users> users = userRepo.findByEmail(email);
+			Optional<User> users = userRepo.findByEmail(email);
 			if (users.isPresent()) {
-				userDto.setUsers(users.get());
+				userDto.setUser(users.get());
 
 				userDto.setStatusCode(200);
 				userDto.setMessage("your profile");

@@ -1,17 +1,17 @@
 package com.cg.homeLoan.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import com.cg.homeLoan.Dto.LoanDTO;
 import com.cg.homeLoan.Exception.ResourceNotFoundException;
-import com.cg.homeLoan.entity.Loan;
+import com.cg.homeLoan.entity.LoanOffer;
 
 public interface LoanService {
-	Loan applyForLoan(LoanDTO loanDTO)throws ResourceNotFoundException;
+	LoanOffer applyForLoan(LoanDTO loanDTO)throws ResourceNotFoundException;
 
-    Loan getLoanById(Long loanId)throws ResourceNotFoundException;
+    LoanOffer getLoanById(Long loanId)throws ResourceNotFoundException;
 
-    List<Loan> getLoansByUserId(Long userId)throws ResourceNotFoundException;
+    Optional<LoanOffer> getLoanByUserId(Long userId)throws ResourceNotFoundException;
 
     void updateLoan(LoanDTO loanDTO)throws ResourceNotFoundException;
 

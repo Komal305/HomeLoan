@@ -1,6 +1,7 @@
 package com.cg.homeLoan.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.cg.homeLoan.Dto.HomeLoanDto;
 import com.cg.homeLoan.Dto.LoanDTO;
 import com.cg.homeLoan.Exception.ResourceNotFoundException;
-import com.cg.homeLoan.entity.Loan;
-import com.cg.homeLoan.entity.Users;
+import com.cg.homeLoan.entity.LoanOffer;
+import com.cg.homeLoan.entity.User;
 import com.cg.homeLoan.repo.UserRepo;
 import com.cg.homeLoan.services.HomeLoanTrackerService;
 import com.cg.homeLoan.services.LoanService;
@@ -40,9 +41,9 @@ public class LoanController {
 	public ResponseEntity<List<HomeLoanDto>> getUserLoans(Authentication authentication) {
 		String username = authentication.getName();
 
-		Users user = userRepo.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		User user = userRepo.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-		List<HomeLoanDto> loans = homeLoanTrackerService.getLoansByUsersId(user.getId());
+		List<HomeLoanDto> loans = homeLoanTrackerService.getLoanByUserId(user.getId());
 		return ResponseEntity.ok(loans);
 	}
 
@@ -54,21 +55,21 @@ public class LoanController {
 
 	@PostMapping("/auth/loan/apply") // checked
 	public String applyForLoan(@RequestBody LoanDTO loanDTO, Model model) throws ResourceNotFoundException {
-		Loan newLoan = loanService.applyForLoan(loanDTO);
+		LoanOffer newLoan = loanService.applyForLoan(loanDTO);
 		model.addAttribute("loan", newLoan);
 		model.addAttribute("message", "Loan application submitted successfully!");
 		return "success";
 	}
 
 	@GetMapping("/user/loan/{loanId}") // checked
-	public ResponseEntity<Loan> getLoanById(@PathVariable Long loanId) throws ResourceNotFoundException {
-		Loan loan = loanService.getLoanById(loanId);
+	public ResponseEntity<LoanOffer> getLoanById(@PathVariable Long loanId) throws ResourceNotFoundException {
+		LoanOffer loan = loanService.getLoanById(loanId);
 		return ResponseEntity.ok(loan);
 	}
 
 	@GetMapping("/user/{userId}") // checked
-	public ResponseEntity<List<Loan>> getLoansByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
-		List<Loan> loans = loanService.getLoansByUserId(userId);
+	public ResponseEntity<Optional<LoanOffer>> getLoansByUserId(@PathVariable Long userId) throws ResourceNotFoundException {
+		Optional<LoanOffer> loans = loanService.getLoanByUserId(userId);
 		return ResponseEntity.ok(loans);
 	}
 

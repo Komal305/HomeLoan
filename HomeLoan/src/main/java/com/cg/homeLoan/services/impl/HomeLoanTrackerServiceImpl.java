@@ -2,6 +2,7 @@ package com.cg.homeLoan.services.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class HomeLoanTrackerServiceImpl implements HomeLoanTrackerService {
     private HomeLoanRepository homeLoanRepository;
 
     @Override
-    public List<HomeLoanDto> getLoansByUsersId(Integer userId) {
-        List<HomeLoan> loans = homeLoanRepository.findByUsersId(userId);
+    public List<HomeLoanDto> getLoanByUserId(Long userId) {
+        Optional<HomeLoan> loans = homeLoanRepository.findById(userId);
         return loans.stream().map(loan -> {
             HomeLoanDto dto = new HomeLoanDto();
-            dto.setLoanId(loan.getLoanId());
+            dto.setLoanId(loan.getId());
             dto.setLoanAccountNumber(loan.getLoanAccountNumber());
             dto.setLoanAmount(loan.getLoanAmount());
             dto.setLoanCreationDate(loan.getLoanCreationDate());
@@ -44,13 +45,15 @@ public class HomeLoanTrackerServiceImpl implements HomeLoanTrackerService {
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
 
         HomeLoanDto dto = new HomeLoanDto();
-        dto.setLoanId(loan.getLoanId());
+        dto.setLoanId(loan.getId());
         dto.setLoanAccountNumber(loan.getLoanAccountNumber());
         dto.setLoanAmount(loan.getLoanAmount());
         dto.setLoanCreationDate(loan.getLoanCreationDate());
 
         return dto;
     }
+
+
 
 
 

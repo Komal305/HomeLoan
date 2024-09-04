@@ -18,6 +18,19 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     private RoleType role; // ADMIN, USER, etc.
+    
+
+	public Role() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public Role(Long id, RoleType role) {
+		super();
+		this.id = id;
+		this.role = role;
+	}
 
 	public Long getId() {
 		return id;
@@ -35,5 +48,15 @@ public class Role {
 		this.role = role;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", role=" + role + "]";
+	}
+
+
+
+	
    
 }

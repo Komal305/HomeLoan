@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.cg.homeLoan.Dto.UserDto;
-import com.cg.homeLoan.entity.Users;
+import com.cg.homeLoan.entity.User;
 import com.cg.homeLoan.services.impl.UserManagementService;
 
 @RestController
@@ -42,8 +42,8 @@ public class UserManagementController {
     }
 
     @PutMapping("/auth/update/{userId}")
-    public  ResponseEntity<UserDto> updateUser(@PathVariable Integer userId, @RequestBody Users users){
-        return ResponseEntity.ok(userManagementService.updateUser(userId, users));
+    public  ResponseEntity<UserDto> updateUser(@PathVariable Integer userId, @RequestBody User user){
+        return ResponseEntity.ok(userManagementService.updateUser(userId, user));
     }
 
     @GetMapping("/adminuser/getProfile")//checked
@@ -56,7 +56,7 @@ public class UserManagementController {
     }
 
     @DeleteMapping("/admin/delete/{userId}")
-    public  ResponseEntity<UserDto> deleteUser(@PathVariable Integer userId){
+    public  ResponseEntity<UserDto> deleteUser(@PathVariable Long userId){
         return ResponseEntity.ok(userManagementService.deleteUser(userId));
     }
 
