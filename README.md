@@ -10,7 +10,7 @@ A comprehensive Home Loan Application built with Spring Boot, JWT, Hibernate, an
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Introduction
 
@@ -43,23 +43,23 @@ To get a local copy up and running, follow these steps:
    ```bash
    git clone https://github.com/Komal305/HomeLoan.git
 
-
-   Navigate to the project directory:
+  Navigate to the project directory:
 
 bash
 cd HomeLoan
-Install dependencies:
 
+Install dependencies:
 bash
 ./mvnw install
-Run the application:
 
+Run the application:
 bash
 ./mvnw spring-boot:run
-Usage
+
+## Usage
 Once the application is running, you can access it in your web browser at http://localhost:8080.
 
-Contributing
+## Contributing
 Contributions are welcome! Please follow these steps to contribute:
 
 Fork the repository.
